@@ -1,6 +1,6 @@
 import './style.css'
 import * as THREE from 'three';
-import { OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls} from './three/examples/jsm/controls/OrbitControls';
 import {interpolateYlGn} from "https://cdn.skypack.dev/d3-scale-chromatic@3";
 
 const scene = new THREE.Scene();
