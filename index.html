@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <canvas id="bg"></canvas>
+    <!-- <p>qwqwqw</p><p>qwqwqw</p><p>qwqwqw</p><p>qwqwqw</p><p>qwqwqw</p><p>qwqwqw</p><p>qwqwqw</p><p>qwqwqw</p><p>qwqwqw</p><p>qwqwqw</p><p>qwqwqw</p><p>qwqwqw</p> -->
+    
+
+
+    <script id="vertexShader" type="x-shader/x-vertex">
+      attribute vec3 color;
+      attribute float size;
+      varying vec3 vColor;
+      void main() {
+        vColor = color;
+        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+        gl_PointSize = size * ( 600.0 / -mvPosition.z );
+        gl_Position = projectionMatrix * mvPosition;
+      }
+  </script>
+  <script id="fragmentShader" type="x-shader/x-fragment">
+      varying vec3 vColor;
+      void main() {
+        float distanceToCenter = distance(gl_PointCoord, vec2(0.5)) * 2.0;
+        float distanceToCenterAlpha = 1.0 - clamp(distanceToCenter, 0.0, 1.0);
+        distanceToCenterAlpha = pow(distanceToCenterAlpha, 2.0);
+        gl_FragColor = vec4( vColor, distanceToCenterAlpha );
+      }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3-color@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-interpolate@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-scale-chromatic@3"></script>
+    
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
